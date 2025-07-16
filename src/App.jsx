@@ -59,7 +59,7 @@ function App() {
               ></Route>
               <Route
                 path="editar/:id"
-                element={<FormularioProducto titulo={'Editar producto'} buscarProducto={buscarProducto}></FormularioProducto>}
+                element={<FormularioProducto titulo={'Editar producto'}></FormularioProducto>}
               ></Route>
             </Route>
             <Route
