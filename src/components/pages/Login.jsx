@@ -12,7 +12,6 @@ const Login = ({ setUsuarioAdmin }) => {
 
   const iniciarSesion = (usuario) => {
     if(usuario.email === import.meta.env.VITE_API_EMAIL && usuario.password === import.meta.env.VITE_API_PASSWORD) {
-      console.log('Soy el administrador')
       setUsuarioAdmin(true)
       sessionStorage.setItem('userKey', true);
       navegacion('/administrador');
@@ -21,7 +20,6 @@ const Login = ({ setUsuarioAdmin }) => {
     }
   };
 
-  console.log(import.meta.env.VITE_API_EMAIL);
   return (
     <section className="container my-3">
       <h1 className="text-center">Login</h1>
