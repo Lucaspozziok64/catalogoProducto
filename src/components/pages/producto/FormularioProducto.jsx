@@ -1,14 +1,24 @@
 import { Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import Swal from 'sweetalert2'
+import { useParams } from "react-router";
+import { useEffect } from "react";
 
-const FormularioProducto = ({ crearProducto }) => {
+const FormularioProducto = ({ crearProducto, titulo, buscarProducto }) => {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
+  const {id} = useParams()
+
+  console.log(id)
+
+  useEffect(()=> {
+    //Verificar si estoy editando
+    //Busco el producto y lo dibujo en el formulario
+  }, [])
 
   const onSubmit = (producto) => {
     console.log(producto);
@@ -26,7 +36,7 @@ const FormularioProducto = ({ crearProducto }) => {
 
   return (
     <section className="container mainSection">
-      <h1 className="display-4 mt-5">Nuevo producto</h1>
+      <h1 className="display-4 mt-5">{titulo}</h1>
       <hr />
       <Form className="my-4" onSubmit={handleSubmit(onSubmit)}>
         <Form.Group className="mb-3" controlId="formNombreProdcuto">
