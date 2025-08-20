@@ -17,7 +17,7 @@ function App() {
     JSON.parse(sessionStorage.getItem("userKey")) || false; // Se puede guardar con True o false
   const productosLocalStorage = JSON.parse(localStorage.getItem('catalogoProdutos')) || [];
   const [usuarioAdmin, setUsuarioAdmin] = useState(usuarioLogueado);
-  const [productos, setProductos] = useState([productosLocalStorage])
+  const [productos, setProductos] = useState(productosLocalStorage)
 
   useEffect(()=> {
     localStorage.setItem('catalogoProdutos', JSON.stringify(productos))

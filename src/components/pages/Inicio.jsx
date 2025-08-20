@@ -2,6 +2,7 @@ import { Container, Row } from "react-bootstrap";
 import CardProducto from "./producto/CardProducto";
 
 const Inicio = ({ productos }) => {
+  
   return (
     <section className="mainSection">
       <img
@@ -12,10 +13,17 @@ const Inicio = ({ productos }) => {
       <Container className="mt-5">
         <h1 className="display-4">Nuestros Productos</h1>
         <hr />
+        {!productos ||
+          (productos.length === 0 && (
+            <h1 className="text-center text-danger mt-5">
+              No hay productos disponibles
+            </h1>
+          ))}
+
         <Row>
-          {
-            productos.map((producto)=> <CardProducto key={producto.id} producto={producto}></CardProducto>)
-          }
+          {productos.map((producto) => (
+            <CardProducto key={producto.id} producto={producto} />
+          ))}
         </Row>
       </Container>
     </section>
