@@ -39,10 +39,14 @@ export const crearProducto = async (productoNuevo) => {
     }
 }
 
-export const editarProducto = async (id) => {
+export const editarProducto = async (productoEditado, id) => {
     try {
         const respuesta = await fetch(urlproductos + `/${id}`, {
-            method: 'PUT'
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(productoEditado)
         })
         return respuesta
     } catch (error) {

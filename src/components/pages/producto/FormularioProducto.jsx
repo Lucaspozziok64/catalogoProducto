@@ -1,25 +1,42 @@
 import { Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import Swal from 'sweetalert2'
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useEffect } from "react";
-import { crearProducto } from "../../../helpers/queries.js"
+import { crearProducto, editarProducto, obtenerProductosPorId } from "../../../helpers/queries.js"
 
 const FormularioProducto = ({ titulo, buscarProducto }) => {
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm();
   const {id} = useParams()
+  const navegacion = useNavigate();
 
   console.log(id)
 
   useEffect(()=> {
     //Verificar si estoy editando
-    //Busco el producto y lo dibujo en el formulario
+    obtenerProducto();
   }, [])
+
+  const obtenerProducto = async () => {
+      if(titulo === 'Editar producto') {
+        const respuesta = await obtenerProductosPorId(id)
+        if(respuesta.status === 200) {
+          const productoBuscado = await respuesta.json()
+          setValue("nombreProducto", productoBuscado.nombreProducto);
+          setValue("precio", productoBuscado.precio);
+          setValue("imagen", productoBuscado.imagen);
+          setValue("descripcion_breve", productoBuscado.descripcion_breve);
+          setValue("descripcion_amplia", productoBuscado.descripcion_amplia);
+          setValue("categoria", productoBuscado.categoria);
+        }
+      }
+  }
 
   const onSubmit = async (producto) => {
     if(titulo === 'Crear producto') {
@@ -35,6 +52,18 @@ const FormularioProducto = ({ titulo, buscarProducto }) => {
         //resetear el formulario 
         reset();
       }//podemos agregar un else con un mensaje de error
+    } else {
+      // tomar datos del formulario
+      const respuesta = await editarProducto(producto, id)
+      if(respuesta.status === 200) {
+        Swal.fire({
+          title: "Producto editado!",
+          text: `El producto ${producto.nombreProducto} fue editado correctamente`,
+          icon: "success",
+        });
+        // redireccionar a la pagina del administrador
+        navegacion('/administrador')
+      }
     }
   };
 
