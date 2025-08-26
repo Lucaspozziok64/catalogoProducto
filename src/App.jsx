@@ -55,7 +55,7 @@ function App() {
               <Route index element={<Administrador setProductos={setProductos} productos={productos} borrarProducto={borrarProducto} />}></Route>
               <Route
                 path="crear"
-                element={<FormularioProducto crearProducto={crearProducto}></FormularioProducto>}
+                element={<FormularioProducto titulo={'Crear producto'} crearProducto={crearProducto}></FormularioProducto>}
               ></Route>
               <Route
                 path="editar/:id"

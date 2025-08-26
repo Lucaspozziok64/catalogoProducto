@@ -3,8 +3,9 @@ import { useForm } from "react-hook-form";
 import Swal from 'sweetalert2'
 import { useParams } from "react-router";
 import { useEffect } from "react";
+import { crearProducto } from "../../../helpers/queries.js"
 
-const FormularioProducto = ({ crearProducto, titulo, buscarProducto }) => {
+const FormularioProducto = ({ titulo, buscarProducto }) => {
   const {
     register,
     handleSubmit,
@@ -20,17 +21,20 @@ const FormularioProducto = ({ crearProducto, titulo, buscarProducto }) => {
     //Busco el producto y lo dibujo en el formulario
   }, [])
 
-  const onSubmit = (producto) => {
-    console.log(producto);
-    //crear el producto nuevo
-    if (crearProducto(producto)) {
-      Swal.fire({
-        title: "Producto Creado!",
-        text: `El producto ${producto.nombreProducto} fue creado correctamente`,
-        icon: "success",
-      });
-      //resetear el formulario 
-      reset();
+  const onSubmit = async (producto) => {
+    if(titulo === 'Crear producto') {
+      console.log(producto);
+      //crear el producto nuevo
+      const respuesta = await crearProducto(producto)
+      if (respuesta.status === 201) {
+        Swal.fire({
+          title: "Producto Creado!",
+          text: `El producto ${producto.nombreProducto} fue creado correctamente`,
+          icon: "success",
+        });
+        //resetear el formulario 
+        reset();
+      }//podemos agregar un else con un mensaje de error
     }
   };
 
