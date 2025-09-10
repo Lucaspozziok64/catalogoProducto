@@ -1,7 +1,9 @@
 const urlproductos = import.meta.env.VITE_API_PRODUCTOS
+const urlUsuarios = import.meta.env.VITE_API_USUARIOS;
 // get, post, put, delete
 
-console.log(urlproductos);
+//console.log(urlproductos);
+console.log(urlUsuarios)
 
 export const leerProductos = async () => {
     try {
@@ -59,6 +61,22 @@ export const borrarProductoPorId = async (id) => {
     try {
         const respuesta = await fetch(urlproductos + `/${id}`, {
             method: 'DELETE',
+        })
+        return respuesta
+    } catch (error) {
+        console.error(error)
+        return null
+    }
+}
+
+export const login = async (dataUsuario) => {
+    try {
+        const respuesta = await fetch(urlUsuarios + '/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataUsuario)
         })
         return respuesta
     } catch (error) {

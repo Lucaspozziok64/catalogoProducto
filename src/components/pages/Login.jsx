@@ -1,6 +1,8 @@
 import { Col, Row, Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
+import { login } from "../../helpers/queries";
+import Swal from "sweetalert2";
 
 const Login = ({ setUsuarioAdmin }) => {
   const {
@@ -8,15 +10,26 @@ const Login = ({ setUsuarioAdmin }) => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const navegacion = useNavigate()
+  const navegacion = useNavigate();
 
-  const iniciarSesion = (usuario) => {
-    if(usuario.email === import.meta.env.VITE_API_EMAIL && usuario.password === import.meta.env.VITE_API_PASSWORD) {
-      setUsuarioAdmin(true)
-      sessionStorage.setItem('userKey', true);
-      navegacion('/administrador');
+  const iniciarSesion = async (usuario) => {
+    const respuesta = await login(usuario);
+    if (respuesta.status === 200) {
+      const datosUsuario = await respuesta.json();
+      console.log(datosUsuario);
+      // Actualizar el state usuarioAdmin
+      // Guardar los datos en el sesion storage
+      Swal.fire({
+        title: "Inicio de sesion correcto!",
+        text: `Bienevenido ${datosUsuario.nombreUsuario}`,
+        icon: "success",
+      });
     } else {
-      console.log('Credenciales Incorrectas')
+      Swal.fire({
+        title: "Credenciales incorrectas!",
+        text: `Error al iniciar sesion`,
+        icon: "Error",
+      });
     }
   };
 

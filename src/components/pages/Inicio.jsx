@@ -1,7 +1,24 @@
 import { Container, Row } from "react-bootstrap";
 import CardProducto from "./producto/CardProducto";
+import { leerProductos } from "../../helpers/queries";
+import { useEffect, useState } from "react";
 
 const Inicio = ({ productos }) => {
+  const [listaProductos, setListaProductos] = useState([])
+
+    useEffect(()=> {
+    obtenerProductos();
+  }, [])
+
+  const obtenerProductos =async ()=> {
+    const respuesta = await leerProductos()
+    if(respuesta.status === 200) {
+      const datos = await respuesta.json()
+      setListaProductos(datos)
+    } else {
+      console.log('Ocurrio un error al intentar leer los productos')
+    }
+  }
   
   return (
     <section className="mainSection">
@@ -14,15 +31,15 @@ const Inicio = ({ productos }) => {
         <h1 className="display-4">Nuestros Productos</h1>
         <hr />
         {!productos ||
-          (productos.length === 0 && (
+          (listaProductos.length === 0 && (
             <h1 className="text-center text-danger mt-5">
               No hay productos disponibles
             </h1>
           ))}
 
         <Row>
-          {productos.map((producto) => (
-            <CardProducto key={producto.id} producto={producto} />
+          {listaProductos.map((producto) => (
+            <CardProducto key={producto._id} producto={producto} />
           ))}
         </Row>
       </Container>
