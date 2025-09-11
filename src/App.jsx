@@ -15,27 +15,34 @@ import { v4 as uuidv4 } from "uuid";
 function App() {
   const usuarioLogueado =
     JSON.parse(sessionStorage.getItem("userKey")) || false; // Se puede guardar con True o false
-  const productosLocalStorage = JSON.parse(localStorage.getItem('catalogoProdutos')) || [];
+  const productosLocalStorage =
+    JSON.parse(localStorage.getItem("catalogoProdutos")) || [];
   const [usuarioAdmin, setUsuarioAdmin] = useState(usuarioLogueado);
-  const [productos, setProductos] = useState(productosLocalStorage)
+  const [productos, setProductos] = useState(productosLocalStorage);
 
-  useEffect(()=> {
-    localStorage.setItem('catalogoProdutos', JSON.stringify(productos))
-  }, [productos])
+  useEffect(() => {
+    localStorage.setItem("catalogoProdutos", JSON.stringify(productos));
+  }, [productos]);
 
-  const crearProducto = (productoNuevo)=> {
+  useEffect(() => {
+    sessionStorage.setItem("userKey", JSON.stringify(usuarioAdmin));
+  }, [usuarioAdmin]);
+
+  const crearProducto = (productoNuevo) => {
     //Agregar un id unico al producto nuevo
     productoNuevo.id = uuidv4();
     //agregar el prodcto al state de productos
-    setProductos([...productos, productoNuevo])
-    return true
-  }
+    setProductos([...productos, productoNuevo]);
+    return true;
+  };
 
-  const borrarProducto = (idProducto)=> {
-    const productosFiltrados = productos.filter((ItemProducto)=> ItemProducto.id !== idProducto)
-    setProductos(productosFiltrados)
-    return true
-  }
+  const borrarProducto = (idProducto) => {
+    const productosFiltrados = productos.filter(
+      (ItemProducto) => ItemProducto.id !== idProducto
+    );
+    setProductos(productosFiltrados);
+    return true;
+  };
 
   return (
     <>
@@ -46,20 +53,41 @@ function App() {
         ></Menu>
         <main>
           <Routes>
-            <Route path="/" element={<Inicio productos={productos}></Inicio>}></Route>
+            <Route
+              path="/"
+              element={<Inicio productos={productos}></Inicio>}
+            ></Route>
             <Route path="/detalle" element={<DetalleProducto />}></Route>
             <Route
               path="/administrador/"
               element={<ProtectorAdmin isAdmin={usuarioAdmin} />}
             >
-              <Route index element={<Administrador setProductos={setProductos} productos={productos} borrarProducto={borrarProducto} />}></Route>
+              <Route
+                index
+                element={
+                  <Administrador
+                    setProductos={setProductos}
+                    productos={productos}
+                    borrarProducto={borrarProducto}
+                  />
+                }
+              ></Route>
               <Route
                 path="crear"
-                element={<FormularioProducto titulo={'Crear producto'} crearProducto={crearProducto}></FormularioProducto>}
+                element={
+                  <FormularioProducto
+                    titulo={"Crear producto"}
+                    crearProducto={crearProducto}
+                  ></FormularioProducto>
+                }
               ></Route>
               <Route
                 path="editar/:id"
-                element={<FormularioProducto titulo={'Editar producto'}></FormularioProducto>}
+                element={
+                  <FormularioProducto
+                    titulo={"Editar producto"}
+                  ></FormularioProducto>
+                }
               ></Route>
             </Route>
             <Route

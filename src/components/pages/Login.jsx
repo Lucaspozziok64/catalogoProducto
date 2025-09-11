@@ -18,12 +18,14 @@ const Login = ({ setUsuarioAdmin }) => {
       const datosUsuario = await respuesta.json();
       console.log(datosUsuario);
       // Actualizar el state usuarioAdmin
+      setUsuarioAdmin({nombreUsuario: datosUsuario.nombreUsuario, token: datosUsuario.token})
       // Guardar los datos en el sesion storage
       Swal.fire({
         title: "Inicio de sesion correcto!",
         text: `Bienevenido ${datosUsuario.nombreUsuario}`,
         icon: "success",
       });
+      navegacion('/administrador')
     } else {
       Swal.fire({
         title: "Credenciales incorrectas!",

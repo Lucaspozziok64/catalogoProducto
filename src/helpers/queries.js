@@ -2,7 +2,7 @@ const urlproductos = import.meta.env.VITE_API_PRODUCTOS
 const urlUsuarios = import.meta.env.VITE_API_USUARIOS;
 // get, post, put, delete
 
-//console.log(urlproductos);
+console.log(urlproductos);
 console.log(urlUsuarios)
 
 export const leerProductos = async () => {
