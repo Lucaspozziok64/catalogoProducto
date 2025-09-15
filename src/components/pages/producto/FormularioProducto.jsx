@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router";
 import { useEffect } from "react";
 import { crearProducto, editarProducto, obtenerProductosPorId } from "../../../helpers/queries.js"
 
-const FormularioProducto = ({ titulo, buscarProducto }) => {
+const FormularioProducto = ({ titulo }) => {
   const {
     register,
     handleSubmit,
