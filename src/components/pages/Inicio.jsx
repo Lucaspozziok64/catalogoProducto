@@ -3,7 +3,7 @@ import CardProducto from "./producto/CardProducto";
 import { leerProductos } from "../../helpers/queries";
 import { useEffect, useState } from "react";
 
-const Inicio = ({ productos }) => {
+const Inicio = () => {
   const [listaProductos, setListaProductos] = useState([])
 
     useEffect(()=> {
