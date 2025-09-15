@@ -50,7 +50,6 @@ const FormularioProducto = ({ titulo }) => {
         reset();
       } else {
         const datosErroneos = await respuesta.json()
-        console.log(datosErroneos[0].msg)
         Swal.fire({
           title: "Ocurrio un error!",
           text: `El producto ${producto.nombreProducto} no pudo ser creado. ${datosErroneos[0].msg}`,
@@ -70,7 +69,6 @@ const FormularioProducto = ({ titulo }) => {
         navegacion('/administrador')
       } else {
         const datosErroneos = await respuesta.json()
-        console.log(datosErroneos[0].msg)
         Swal.fire({
           title: "Ocurrio un error!",
           text: `El producto ${producto.nombreProducto} no pudo ser creado. ${datosErroneos[0].msg}`,
