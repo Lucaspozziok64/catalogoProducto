@@ -48,7 +48,15 @@ const FormularioProducto = ({ titulo }) => {
         });
         //resetear el formulario 
         reset();
-      }//podemos agregar un else con un mensaje de error
+      } else {
+        const datosErroneos = await respuesta.json()
+        console.log(datosErroneos[0].msg)
+        Swal.fire({
+          title: "Ocurrio un error!",
+          text: `El producto ${producto.nombreProducto} no pudo ser creado. ${datosErroneos[0].msg}`,
+          icon: "error",
+        });
+      }
     } else {
       // tomar datos del formulario
       const respuesta = await editarProducto(producto, id)
@@ -60,6 +68,14 @@ const FormularioProducto = ({ titulo }) => {
         });
         // redireccionar a la pagina del administrador
         navegacion('/administrador')
+      } else {
+        const datosErroneos = await respuesta.json()
+        console.log(datosErroneos[0].msg)
+        Swal.fire({
+          title: "Ocurrio un error!",
+          text: `El producto ${producto.nombreProducto} no pudo ser creado. ${datosErroneos[0].msg}`,
+          icon: "error",
+        });
       }
     }
   };
