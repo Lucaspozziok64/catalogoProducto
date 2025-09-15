@@ -30,7 +30,7 @@ const Inicio = ({ productos }) => {
       <Container className="mt-5">
         <h1 className="display-4">Nuestros Productos</h1>
         <hr />
-        {!productos ||
+        {!listaProductos ||
           (listaProductos.length === 0 && (
             <h1 className="text-center text-danger mt-5">
               No hay productos disponibles

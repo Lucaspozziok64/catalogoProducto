@@ -16,8 +16,6 @@ const FormularioProducto = ({ titulo, buscarProducto }) => {
   const {id} = useParams()
   const navegacion = useNavigate();
 
-  console.log(id)
-
   useEffect(()=> {
     //Verificar si estoy editando
     obtenerProducto();

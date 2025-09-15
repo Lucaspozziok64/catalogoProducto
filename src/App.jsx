@@ -11,6 +11,7 @@ import Login from "./components/pages/Login";
 import { useEffect, useState } from "react";
 import ProtectorAdmin from "./components/routes/ProtectorAdmin";
 import { v4 as uuidv4 } from "uuid";
+import { leerProductos } from "./helpers/queries";
 
 function App() {
   const usuarioLogueado =
@@ -19,6 +20,7 @@ function App() {
     JSON.parse(localStorage.getItem("catalogoProdutos")) || [];
   const [usuarioAdmin, setUsuarioAdmin] = useState(usuarioLogueado);
   const [productos, setProductos] = useState(productosLocalStorage);
+  const [listaProductos, setListaProductos] = useState([])
 
   useEffect(() => {
     localStorage.setItem("catalogoProdutos", JSON.stringify(productos));
@@ -27,6 +29,21 @@ function App() {
   useEffect(() => {
     sessionStorage.setItem("userKey", JSON.stringify(usuarioAdmin));
   }, [usuarioAdmin]);
+
+  
+      useEffect(()=> {
+      obtenerProductos();
+    }, [])
+  
+    const obtenerProductos =async ()=> {
+      const respuesta = await leerProductos()
+      if(respuesta.status === 200) {
+        const datos = await respuesta.json()
+        setListaProductos(datos)
+      } else {
+        console.log('Ocurrio un error al intentar leer los productos')
+      }
+    }
 
   const crearProducto = (productoNuevo) => {
     //Agregar un id unico al producto nuevo

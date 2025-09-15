@@ -1,86 +1,91 @@
-const urlproductos = import.meta.env.VITE_API_PRODUCTOS
+const urlproductos = import.meta.env.VITE_API_PRODUCTOS;
 const urlUsuarios = import.meta.env.VITE_API_USUARIOS;
 // get, post, put, delete
 
 console.log(urlproductos);
-console.log(urlUsuarios)
+console.log(urlUsuarios);
 
 export const leerProductos = async () => {
-    try {
-        const respuesta = await fetch(urlproductos)
-        return respuesta
-    } catch (error) {
-        console.error(error)
-        return null
-    }
-}
+  try {
+    const respuesta = await fetch(urlproductos);
+    return respuesta;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
 
 export const obtenerProductosPorId = async (id) => {
-    try {
-        const respuesta = await fetch(urlproductos + `/${id}`)
-        return respuesta
-    } catch (error) {
-        console.error(error)
-        return null
-    }
-}
+  try {
+    const respuesta = await fetch(urlproductos + `/${id}`);
+    return respuesta;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
 
 export const crearProducto = async (productoNuevo) => {
-    try {
-        const respuesta = await fetch(urlproductos, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(productoNuevo)
-        })
-        return respuesta
-    } catch (error) {
-        console.error(error)
-        return null
-    }
-}
+  try {
+    const respuesta = await fetch(urlproductos, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-token": JSON.parse(sessionStorage.getItem("userKey")).token,
+      },
+      body: JSON.stringify(productoNuevo),
+    });
+    return respuesta;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
 
 export const editarProducto = async (productoEditado, id) => {
-    try {
-        const respuesta = await fetch(urlproductos + `/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(productoEditado)
-        })
-        return respuesta
-    } catch (error) {
-        console.error(error)
-        return null
-    }
-}
+  try {
+    const respuesta = await fetch(urlproductos + `/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "x-token": JSON.parse(sessionStorage.getItem("userKey")).token,
+      },
+      body: JSON.stringify(productoEditado),
+    });
+    return respuesta;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
 
 export const borrarProductoPorId = async (id) => {
-    try {
-        const respuesta = await fetch(urlproductos + `/${id}`, {
-            method: 'DELETE',
-        })
-        return respuesta
-    } catch (error) {
-        console.error(error)
-        return null
-    }
-}
+  try {
+    const respuesta = await fetch(urlproductos + `/${id}`, {
+      method: "DELETE",
+      headers: {
+        "x-token": JSON.parse(sessionStorage.getItem("userKey")).token,
+      },
+    });
+    return respuesta;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
 
 export const login = async (dataUsuario) => {
-    try {
-        const respuesta = await fetch(urlUsuarios + '/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(dataUsuario)
-        })
-        return respuesta
-    } catch (error) {
-        console.error(error)
-        return null
-    }
-}
+  try {
+    const respuesta = await fetch(urlUsuarios + "/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dataUsuario),
+    });
+    return respuesta;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
